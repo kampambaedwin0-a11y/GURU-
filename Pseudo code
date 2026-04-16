@@ -1,0 +1,40 @@
+FUNCTION precedence(op)
+    IF op = '+' OR op = '-' THEN RETURN 1
+    IF op = '*' OR op = '/' THEN RETURN 2
+    IF op = '^' THEN RETURN 3
+    RETURN -1
+END FUNCTION
+
+
+FUNCTION infixToPostfix(expression)
+    CREATE empty stack S
+    CREATE empty string result
+
+    FOR each character c in expression DO
+
+        IF c is operand (letter or digit) THEN
+            ADD c to result
+
+        ELSE IF c = '(' THEN
+            PUSH c to stack
+
+        ELSE IF c = ')' THEN
+            WHILE top of stack != '(' DO
+                POP from stack and ADD to result
+            END WHILE
+            POP '(' from stack
+
+        ELSE IF c is operator THEN
+            WHILE stack is not empty AND precedence(c) <= precedence(top of stack) DO
+                POP from stack and ADD to result
+            END WHILE
+            PUSH c to stack
+
+    END FOR
+
+    WHILE stack is not empty DO
+        POP from stack and ADD to result
+    END WHILE
+
+    RETURN result
+END FUNCTION
