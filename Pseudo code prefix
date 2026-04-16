@@ -1,0 +1,20 @@
+FUNCTION reverse(expression)
+    RETURN reversed expression
+END FUNCTION
+
+
+FUNCTION infixToPrefix(expression)
+
+    reversedExpr ← reverse(expression)
+
+    FOR each character c in reversedExpr DO
+        IF c = '(' THEN replace with ')'
+        ELSE IF c = ')' THEN replace with '('
+    END FOR
+
+    postfixExpr ← infixToPostfix(modified expression)
+
+    prefixExpr ← reverse(postfixExpr)
+
+    RETURN prefixExpr
+END FUNCTION
